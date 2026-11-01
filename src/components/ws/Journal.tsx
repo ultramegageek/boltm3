@@ -17,7 +17,7 @@ export function Journal({ wsId, userId, data }: WsProps) {
     e.preventDefault();
     if (!title.trim()) return;
     const { error } = await supabase.from("journal_entries").insert({ workspace_id: wsId, title, content, entry_date: date });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setTitle(""); setContent(""); data.refresh("journal");
   }
 
@@ -72,7 +72,7 @@ function MatchScorer({ wsId, data }: WsProps) {
       workspace_id: wsId, label: label || `Practice #${data.matches.length + 1}`,
       auto_score: s.auto, teleop_score: s.teleop, endgame_score: s.endgame,
     });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setLabel(""); setS({ auto: 0, teleop: 0, endgame: 0 }); data.refresh("matches");
   }
 

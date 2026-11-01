@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 export type WsData = ReturnType<typeof useWorkspaceData>;
 export type WsProps = { wsId: string; userId: string; data: WsData };
 
-export function MemberAvatar({ p, className }: { p?: Profile | null; className?: string }) {
+export function MemberAvatar({ p, className }: { p?: Profile | null | undefined; className?: string }) {
   return (
     <Avatar className={cn("size-7 border border-border", className)} title={p?.full_name}>
       {p?.avatar_url && <AvatarImage src={p.avatar_url} />}
@@ -62,7 +62,7 @@ export function TaskDialog({
   const [assignee, setAssignee] = useState(task?.assignee_id ?? NONE);
 
   async function save() {
-    if (!title.trim()) return toast.error("Title required");
+    if (!title.trim()) { toast.error("Title required"); return; }
     const row = {
       title: title.trim(),
       description,
@@ -74,7 +74,7 @@ export function TaskDialog({
     const { error } = task
       ? await supabase.from("tasks").update(row).eq("id", task.id)
       : await supabase.from("tasks").insert({ ...row, workspace_id: wsId });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setOpen(false);
     if (!task) {
       setTitle("");
@@ -85,7 +85,7 @@ export function TaskDialog({
   async function remove() {
     if (!task) return;
     const { error } = await supabase.from("tasks").delete().eq("id", task.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setOpen(false);
   }
 

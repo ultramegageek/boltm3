@@ -10,7 +10,7 @@ const NONE = "__none";
 export function Portfolio({ data }: WsProps) {
   const ready = data.pages.filter((p) => p.status === "ready").length;
 
-  async function update(id: string, patch: Record<string, string | null>) {
+  async function update(id: string, patch: { title?: string; status?: string; assignee_id?: string | null }) {
     const { error } = await supabase.from("portfolio_pages").update(patch).eq("id", id);
     if (error) toast.error(error.message);
     else data.refresh("pages");

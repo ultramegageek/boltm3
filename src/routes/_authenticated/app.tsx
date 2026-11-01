@@ -50,7 +50,7 @@ function AppPage() {
   useEffect(() => {
     if (!ws.data?.length) return;
     const saved = localStorage.getItem("bolt-ws");
-    setWsId((cur) => cur && ws.data!.some((w) => w.id === cur) ? cur : ws.data!.find((w) => w.id === saved)?.id ?? ws.data![0].id);
+    setWsId((cur) => cur && ws.data!.some((w) => w.id === cur) ? cur : ws.data!.find((w) => w.id === saved)?.id ?? ws.data![0]!.id);
   }, [ws.data]);
 
   if (ws.isLoading) return <div className="grid min-h-screen place-items-center text-muted-foreground">Loading…</div>;
@@ -151,7 +151,7 @@ function ProfileDialog({ open, onOpenChange, profile }: { open: boolean; onOpenC
   const [avatar, setAvatar] = useState(profile.avatar_url ?? "");
   async function save() {
     const { error } = await supabase.from("profiles").update({ full_name: name, team_role: role, avatar_url: avatar || null }).eq("id", profile.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries();
     onOpenChange(false);
   }
@@ -175,12 +175,12 @@ function Onboarding({ onDone }: { onDone: (id: string) => void }) {
   const [code, setCode] = useState("");
   async function create() {
     const { data, error } = await supabase.rpc("create_workspace", { _name: name });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     onDone(data as string);
   }
   async function join() {
     const { data, error } = await supabase.rpc("join_workspace", { _code: code });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     onDone(data as string);
   }
   return (
