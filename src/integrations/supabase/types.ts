@@ -14,13 +14,277 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      journal_entries: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string
+          entry_date: string
+          id: string
+          title: string
+          workspace_id: string
+        }
+        Insert: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          entry_date?: string
+          id?: string
+          title: string
+          workspace_id: string
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          entry_date?: string
+          id?: string
+          title?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "journal_entries_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "journal_entries_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          auto_score: number
+          created_at: string
+          created_by: string
+          endgame_score: number
+          id: string
+          label: string
+          teleop_score: number
+          workspace_id: string
+        }
+        Insert: {
+          auto_score?: number
+          created_at?: string
+          created_by?: string
+          endgame_score?: number
+          id?: string
+          label?: string
+          teleop_score?: number
+          workspace_id: string
+        }
+        Update: {
+          auto_score?: number
+          created_at?: string
+          created_by?: string
+          endgame_score?: number
+          id?: string
+          label?: string
+          teleop_score?: number
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_pages: {
+        Row: {
+          assignee_id: string | null
+          id: string
+          page_number: number
+          status: string
+          title: string
+          workspace_id: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          id?: string
+          page_number: number
+          status?: string
+          title?: string
+          workspace_id: string
+        }
+        Update: {
+          assignee_id?: string | null
+          id?: string
+          page_number?: number
+          status?: string
+          title?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_pages_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "portfolio_pages_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string
+          id: string
+          team_role: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string
+          id: string
+          team_role?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          team_role?: string
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          assignee_id: string | null
+          award: string | null
+          category: string
+          created_at: string
+          created_by: string
+          description: string
+          id: string
+          status: string
+          title: string
+          workspace_id: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          award?: string | null
+          category?: string
+          created_at?: string
+          created_by?: string
+          description?: string
+          id?: string
+          status?: string
+          title: string
+          workspace_id: string
+        }
+        Update: {
+          assignee_id?: string | null
+          award?: string | null
+          category?: string
+          created_at?: string
+          created_by?: string
+          description?: string
+          id?: string
+          status?: string
+          title?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspace_members: {
+        Row: {
+          joined_at: string
+          user_id: string
+          workspace_id: string
+        }
+        Insert: {
+          joined_at?: string
+          user_id: string
+          workspace_id: string
+        }
+        Update: {
+          joined_at?: string
+          user_id?: string
+          workspace_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workspace_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "workspace_members_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "workspaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workspaces: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          invite_code: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          invite_code?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          invite_code?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_workspace: { Args: { _name: string }; Returns: string }
+      is_member: { Args: { _ws: string }; Returns: boolean }
+      join_workspace: { Args: { _code: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
