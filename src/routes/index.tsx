@@ -1,24 +1,59 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Zap, Trophy, KanbanSquare, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "bolt.m3 — FTC Team Workspace" },
+      { name: "description", content: "Plan awards, tasks, matches and your 15-page portfolio together as an FTC team." },
+      { property: "og:title", content: "bolt.m3 — FTC Team Workspace" },
+      { property: "og:description", content: "Plan awards, tasks, matches and your portfolio together." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Landing() {
+  const features = [
+    { icon: Trophy, t: "All 11 FTC awards", d: "Requirements and owners per award." },
+    { icon: KanbanSquare, t: "Team Kanban", d: "Hardware, software, outreach, logistics." },
+    { icon: BookOpen, t: "Journal & scorer", d: "Daily logs and practice match stats." },
+  ];
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen px-6">
+      <header className="mx-auto flex max-w-6xl items-center justify-between py-6">
+        <div className="flex items-center gap-2 font-display text-xl font-bold">
+          <span className="grid size-8 place-items-center rounded-lg bg-gradient-primary shadow-glow">
+            <Zap className="size-4" />
+          </span>
+          bolt<span className="text-primary">.m3</span>
+        </div>
+        <Button asChild variant="ghost"><Link to="/auth">Sign in</Link></Button>
+      </header>
+      <main className="mx-auto max-w-6xl py-20">
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">FIRST Tech Challenge · 2026–27</p>
+        <h1 className="mt-4 max-w-3xl text-5xl font-bold leading-[1.05] md:text-7xl">
+          One workspace for the whole <span className="text-gradient">bolt.m3</span> season.
+        </h1>
+        <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+          Countdown to every event, track award readiness, run the build board and finish the portfolio — synced live across the team.
+        </p>
+        <div className="mt-10 flex gap-3">
+          <Button asChild variant="hero" size="lg"><Link to="/auth">Enter workspace</Link></Button>
+        </div>
+        <div className="mt-24 grid gap-4 md:grid-cols-3">
+          {features.map((f) => (
+            <div key={f.t} className="glass p-6">
+              <f.icon className="size-6 text-primary" />
+              <h3 className="mt-4 text-lg font-semibold">{f.t}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{f.d}</p>
+            </div>
+          ))}
+        </div>
+      </main>
     </div>
   );
 }
