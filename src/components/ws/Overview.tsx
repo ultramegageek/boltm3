@@ -4,7 +4,7 @@ import { Field, SectionTitle, type WsProps } from "./shared";
 
 export function Overview({ data }: WsProps) {
   const [eventId, setEventId] = useState<string>(
-    () => EVENTS.find((e) => new Date(e.date).getTime() > Date.now())?.id ?? EVENTS[EVENTS.length - 1].id,
+    () => EVENTS.find((e) => new Date(e.date).getTime() > Date.now())?.id ?? "worlds",
   );
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
