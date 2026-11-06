@@ -1,4 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Zap, Trophy, KanbanSquare, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -17,6 +19,16 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) navigate({ to: "/app", replace: true });
+    });
+    const { data } = supabase.auth.onAuthStateChange((_e, s) => {
+      if (s) navigate({ to: "/app", replace: true });
+    });
+    return () => data.subscription.unsubscribe();
+  }, [navigate]);
   const features = [
     { icon: Trophy, t: "All 11 FTC awards", d: "Requirements and owners per award." },
     { icon: KanbanSquare, t: "Team Kanban", d: "Hardware, software, outreach, logistics." },
