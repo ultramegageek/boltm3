@@ -9,6 +9,12 @@ export const EVENTS = [
   { id: "worlds", name: "FIRST World Championship", date: "2027-04-29T09:00:00-05:00" },
 ] as const;
 
+export const OTHER_EVENTS = [
+  { id: "quant-live", name: "Quant FTC LiveStream with Coach Pratt", date: "2026-11-08T12:00:00+05:00" },
+  { id: "andymark-meet", name: "“Get knowledge with Bolt.m3” — Google Meet with AndyMark", date: "2026-11-11T18:00:00+05:00" },
+  { id: "sana-scrim", name: "Sana & Shyraq FTC Scrimmage", date: "2026-11-22T11:00:00+05:00" },
+] as const;
+
 export const AWARDS = [
   { id: "leadership", name: "FIRST Leadership Award" },
   { id: "inspire", name: "Inspire Award" },
