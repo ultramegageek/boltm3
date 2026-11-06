@@ -58,7 +58,11 @@ function AuthPage() {
         if (error) throw error;
       }
     } catch (err) {
-      toast.error((err as Error).message);
+      const msg = (err as Error).message;
+      if (/invalid login credentials/i.test(msg)) toast.error("Неверный email или пароль. Если вы только зарегистрировались — сначала подтвердите почту по ссылке из письма.");
+      else if (/not confirmed/i.test(msg)) toast.error("Почта не подтверждена. Откройте письмо и нажмите ссылку.");
+      else if (/already registered/i.test(msg)) toast.error("Этот email уже зарегистрирован — войдите.");
+      else toast.error(msg || "Сервер временно недоступен, попробуйте ещё раз.");
     } finally {
       setBusy(false);
     }
