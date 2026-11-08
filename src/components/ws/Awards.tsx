@@ -8,7 +8,7 @@ import { MemberAvatar, SectionTitle, StatusPill, TaskDialog, type WsProps } from
 
 export function Awards({ wsId, data }: WsProps) {
   const [active, setActive] = useState<string>(AWARDS[0].id);
-  const award = AWARDS.find((a) => a.id === active)!;
+  const award = AWARDS.find((a) => a.id === active) ?? AWARDS[0];
   const tasks = data.tasks.filter((t) => t.award === active);
   const done = tasks.filter((t) => t.status === "done").length;
 
@@ -21,12 +21,12 @@ export function Awards({ wsId, data }: WsProps) {
             const at = data.tasks.filter((t) => t.award === a.id);
             const d = at.filter((t) => t.status === "done").length;
             return (
-              <button key={a.id} onClick={() => setActive(a.id)}
-                className={cn("flex shrink-0 items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm transition",
+              <Button variant="ghost" key={a.id} onClick={() => setActive(a.id)}
+                className={cn("flex h-auto shrink-0 items-center justify-between gap-3 whitespace-normal rounded-lg px-3 py-2 text-left text-sm transition",
                   active === a.id ? "bg-primary text-primary-foreground" : "hover:bg-accent")}>
                 <span>{a.name}{"optional" in a && <span className="ml-1 opacity-60">(opt)</span>}</span>
                 <span className="font-mono text-xs opacity-80">{d}/{at.length}</span>
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -36,6 +36,7 @@ export function Awards({ wsId, data }: WsProps) {
             <TaskDialog key={active} wsId={wsId} members={data.members} defaultAward={active}
               trigger={<Button variant="hero" size="sm"><Plus /> Add requirement</Button>} />
           </div>
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted-foreground">{award.description}</p>
           <Progress value={tasks.length ? (done / tasks.length) * 100 : 0} className="mt-4 h-2" />
           <p className="mt-1 text-xs text-muted-foreground">{done} of {tasks.length} complete</p>
           <div className="mt-6 space-y-2">
