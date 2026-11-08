@@ -1,4 +1,4 @@
-import logo from "@/assets/bolt-logo.jpeg.asset.json";
+import logo from "@/assets/bolt-logo-new.jpeg.asset.json";
 import { cn } from "@/lib/utils";
 
 export function BoltLogo({ className }: { className?: string }) {
