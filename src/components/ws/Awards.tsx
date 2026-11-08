@@ -22,7 +22,7 @@ export function Awards({ wsId, data }: WsProps) {
             const d = at.filter((t) => t.status === "done").length;
             return (
               <Button variant="ghost" key={a.id} onClick={() => setActive(a.id)}
-                className={cn("flex shrink-0 items-center justify-between gap-3 rounded-lg px-3 py-2 text-left text-sm transition",
+                className={cn("flex h-auto shrink-0 items-center justify-between gap-3 whitespace-normal rounded-lg px-3 py-2 text-left text-sm transition",
                   active === a.id ? "bg-primary text-primary-foreground" : "hover:bg-accent")}>
                 <span>{a.name}{"optional" in a && <span className="ml-1 opacity-60">(opt)</span>}</span>
                 <span className="font-mono text-xs opacity-80">{d}/{at.length}</span>
