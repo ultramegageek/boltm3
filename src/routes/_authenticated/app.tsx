@@ -2,7 +2,9 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Zap, LogOut, LayoutDashboard, Trophy, KanbanSquare, BookOpen, FileText, Users, UserCog } from "lucide-react";
+import { LogOut, LayoutDashboard, Trophy, KanbanSquare, BookOpen, FileText, Users, UserCog } from "lucide-react";
+import { BoltLogo } from "@/components/BoltLogo";
+import { TeamRoleField } from "@/components/TeamRoleField";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +12,6 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useMyProfile, useMyWorkspaces, useWorkspaceData, type Profile } from "@/hooks/use-workspace-data";
-import { TEAM_ROLES } from "@/lib/ftc";
 import { cn } from "@/lib/utils";
 import { Field, MemberAvatar } from "@/components/ws/shared";
 import { Overview } from "@/components/ws/Overview";
@@ -27,6 +28,8 @@ export const Route = createFileRoute("/_authenticated/app")({
       { name: "description", content: "bolt.m3 team workspace: awards, tasks, journal and portfolio." },
       { property: "og:title", content: "Workspace — bolt.m3" },
       { property: "og:description", content: "bolt.m3 team workspace." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AppPage,
@@ -94,7 +97,7 @@ function Workspace({ wsId, userId, profile, workspaces, onSwitch, onNew }: {
       <header className="sticky top-0 z-30 border-b border-border bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3">
           <div className="flex items-center gap-2 font-display text-lg font-bold">
-            <span className="grid size-8 place-items-center rounded-lg bg-gradient-primary shadow-glow"><Zap className="size-4" /></span>
+            <BoltLogo />
             bolt<span className="text-primary">.m3</span>
           </div>
           <div className="hidden w-56 sm:block">
@@ -161,7 +164,7 @@ function ProfileDialog({ open, onOpenChange, profile }: { open: boolean; onOpenC
         <DialogHeader><DialogTitle>Your profile</DialogTitle></DialogHeader>
         <div className="space-y-4">
           <div className="space-y-1.5"><Label>Name</Label><Input value={name} onChange={(e) => setName(e.target.value)} /></div>
-          <Field label="Team role" value={role} onChange={setRole} options={TEAM_ROLES.map((r) => [r, r])} />
+          <TeamRoleField value={role} onChange={setRole} />
           <div className="space-y-1.5"><Label>Avatar image URL</Label><Input value={avatar} onChange={(e) => setAvatar(e.target.value)} placeholder="https://…" /></div>
           <Button variant="hero" className="w-full" onClick={save}>Save</Button>
         </div>

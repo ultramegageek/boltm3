@@ -1,14 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Zap } from "lucide-react";
+import { BoltLogo } from "@/components/BoltLogo";
+import { TeamRoleField } from "@/components/TeamRoleField";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TEAM_ROLES } from "@/lib/ftc";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -17,6 +16,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in to the bolt.m3 FTC team workspace." },
       { property: "og:title", content: "Sign in — bolt.m3" },
       { property: "og:description", content: "Sign in to the bolt.m3 FTC team workspace." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AuthPage,
@@ -77,7 +78,7 @@ function AuthPage() {
     <div className="grid min-h-screen place-items-center px-4">
       <div className="glass w-full max-w-md p-8">
         <div className="flex items-center gap-2 font-display text-2xl font-bold">
-          <span className="grid size-9 place-items-center rounded-lg bg-gradient-primary shadow-glow"><Zap className="size-4" /></span>
+          <BoltLogo className="size-12" />
           bolt<span className="text-primary">.m3</span>
         </div>
         <h1 className="mt-6 text-2xl font-semibold">{mode === "in" ? "Welcome back" : "Join the team"}</h1>
@@ -85,13 +86,7 @@ function AuthPage() {
           {mode === "up" && (
             <>
               <div className="space-y-1.5"><Label>Name</Label><Input required value={name} onChange={(e) => setName(e.target.value)} /></div>
-              <div className="space-y-1.5">
-                <Label>Team role</Label>
-                <Select value={role} onValueChange={setRole}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{TEAM_ROLES.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
-                </Select>
-              </div>
+              <TeamRoleField value={role} onChange={setRole} />
             </>
           )}
           <div className="space-y-1.5"><Label>Email</Label><Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></div>

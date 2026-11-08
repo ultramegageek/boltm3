@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Zap, Trophy, KanbanSquare, BookOpen } from "lucide-react";
+import { Trophy, KanbanSquare, BookOpen } from "lucide-react";
+import { BoltLogo } from "@/components/BoltLogo";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -38,9 +39,7 @@ function Landing() {
     <div className="min-h-screen px-6">
       <header className="mx-auto flex max-w-6xl items-center justify-between py-6">
         <div className="flex items-center gap-2 font-display text-xl font-bold">
-          <span className="grid size-8 place-items-center rounded-lg bg-gradient-primary shadow-glow">
-            <Zap className="size-4" />
-          </span>
+          <BoltLogo />
           bolt<span className="text-primary">.m3</span>
         </div>
         <Button asChild variant="ghost"><Link to="/auth">Sign in</Link></Button>
