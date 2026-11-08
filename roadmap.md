@@ -1,4 +1,4 @@
-- [ ] Add supplied award descriptions.
-- [ ] Replace lightning branding with the uploaded red bolt.
-- [ ] Allow typed team roles during signup and profile editing.
-- [ ] Verify the changes in the app.
+- [x] Add supplied award descriptions.
+- [x] Replace lightning branding with the uploaded red bolt.
+- [x] Allow typed team roles during signup and profile editing.
+- [x] Verify the changes in the app.
